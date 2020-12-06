@@ -24,7 +24,7 @@
 #include "gpio.h"
 #include "lis3mdltr.h"
 #include "lsm6ds0.h"
-#include "hts221.h"
+#include <hts221.h>
 
 uint8_t temp = 0;
 float mag[3], acc[3];
@@ -49,8 +49,7 @@ int main(void)
 
   while (1)
   {
-	  //os			   x      y        z
-	  lsm6ds0_get_acc(acc, (acc+1), (acc+2));
+	  hts221_getTemp();
 	  LL_mDelay(50);
   }
 }
