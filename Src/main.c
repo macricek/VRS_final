@@ -24,6 +24,7 @@
 #include "gpio.h"
 #include "lis3mdltr.h"
 #include "lsm6ds0.h"
+#include "hts221.h"
 
 uint8_t temp = 0;
 float mag[3], acc[3];
@@ -44,6 +45,7 @@ int main(void)
   MX_I2C1_Init();
 
   lsm6ds0_init();
+  hts221_init();
 
   while (1)
   {
