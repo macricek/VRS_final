@@ -25,15 +25,24 @@ void hts221_readArray(uint8_t * data, uint8_t reg, uint8_t length)
 	i2c_master_read(data, length, reg, DEVICE_ADDR_READ, 1);
 }
 
+
+
 uint16_t hts221_getTemp()
 {
-uint16_t T0_degC,T1_degC;
-uint8_t data[4],data_single;	//temp premenne na citanie registrov
+uint16_t T0_degC,T1_degC,MSB_T0,MSB_T1;
 
-hts221_readArray(data_single, T0_degC_x8, 1);
-T0_degC = (uint16_t) (data_single	/	8);
-hts221_readArray(data_single, T1_degC_x8, 1);
-T1_degC = (uint16_t) (data_single	/	8);
+uint8_t data[4],data_single,pom;	//temp premenne na citanie registrov
+
+//	tvar cisla :  MSB MSB degC(8)
+pom=hts221_read_byte(T1_T0_MSB);
+MSB_T0=(uint16_t) (pom & 0x3)<<8;	//porovnanie s poslednymi dvoma bitmi a posun o 8
+MSB_T1=(uint16_t) (pom & 0xC)<<6;	//porovnanie s 3tim a 4tym od konca a posun   o 6
+
+hts221_readArray(&data_single, T0_degC_x8, 1);
+T0_degC = (uint16_t) ((data_single | MSB_T0) 	/	8);
+
+hts221_readArray(&data_single, T1_degC_x8, 1);
+T1_degC = (uint16_t) ((data_single| MSB_T1)	/	8);
 
 return 0;
 }
