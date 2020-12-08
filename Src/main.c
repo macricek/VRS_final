@@ -25,9 +25,10 @@
 #include "lis3mdltr.h"
 #include "lsm6ds0.h"
 #include <hts221.h>
+#include <lps25hb.h>
 
 uint8_t temp = 0;
-float mag[3], acc[3];
+float mag[3], acc[3], tlak;
 int16_t teplota = 0;
 uint8_t vlhkost = 0;
 
@@ -48,12 +49,13 @@ int main(void)
 
   lsm6ds0_init();
   hts221_init();
+  lps25hb_init();
 
   while (1)
   {
 	  teplota = hts221_getTemp();
-
 	  vlhkost = hts221_getHumi();
+	  tlak = lps25hb_getPressure();
 
 	  LL_mDelay(50);
   }
