@@ -28,7 +28,8 @@
 
 uint8_t temp = 0;
 float mag[3], acc[3];
-int16_t teplota=0;
+int16_t teplota = 0;
+uint8_t vlhkost = 0;
 
 void SystemClock_Config(void);
 
@@ -51,6 +52,8 @@ int main(void)
   while (1)
   {
 	  teplota = hts221_getTemp();
+
+	  vlhkost = hts221_getHumi();
 
 	  LL_mDelay(50);
   }
