@@ -32,8 +32,8 @@ pressH = lps25hb_read_byte(PRESS_OUT_H);
 pressL = lps25hb_read_byte(PRESS_OUT_L);
 pressXL = lps25hb_read_byte(PRESS_OUT_XL);
 
-int complement = pressH & pressL & pressXL;
-return complement / 4096.0f;
+int complement = (pressH<<16) | (pressL<<8) | pressXL;
+return complement / 4096.1f;
 }
 
 
@@ -44,7 +44,7 @@ uint8_t lps25hb_init(void)
 
 	LL_mDelay(100);
 
-	uint8_t val = hts221_read_byte(WHO_AM_I_ADDRESS);
+	uint8_t val = lps25hb_read_byte(WHO_AM_I_ADDRESS);
 
 	if(val == WHO_AM_I_VALUE)
 	{
@@ -52,7 +52,7 @@ uint8_t lps25hb_init(void)
 	}
 	else			//if the device is not found on one address, try another one
 	{
-		val = hts221_read_byte(WHO_AM_I_ADDRESS);
+		val = lps25hb_read_byte(WHO_AM_I_ADDRESS);
 		if(val == WHO_AM_I_VALUE)
 		{
 			status = 1;

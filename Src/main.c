@@ -28,8 +28,8 @@
 #include <lps25hb.h>
 
 uint8_t temp = 0;
-float mag[3], acc[3], tlak;
-int16_t teplota = 0;
+float mag[3], acc[3], tlak=0;
+float teplota = 0;
 uint8_t vlhkost = 0;
 
 void SystemClock_Config(void);
@@ -55,7 +55,10 @@ int main(void)
   {
 	  teplota = hts221_getTemp();
 	  vlhkost = hts221_getHumi();
+
 	  tlak = lps25hb_getPressure();
+
+
 
 	  LL_mDelay(50);
   }

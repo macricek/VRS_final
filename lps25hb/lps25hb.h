@@ -9,7 +9,7 @@
 #ifndef LPS25HB_H_
 #define LPS25HB_H_
 
-#define		DEVICE_ADDR_0					0xB8
+#define		DEVICE_ADDR_0					0xBB
 #define		DEVICE_ADDR_1					0xBA
 #define		STATUS							0x27
 #define 	WHO_AM_I_VALUE					0xBD

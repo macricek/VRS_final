@@ -41,7 +41,7 @@ uint8_t hts221_read_byte(uint8_t reg_addr);
 void hts221_write_byte(uint8_t reg_addr, uint8_t value);
 void hts221_readArray(uint8_t * data, uint8_t reg, uint8_t length);
 uint8_t hts221_init(void);
-int16_t hts221_getTemp();
+float hts221_getTemp();
 uint16_t hts221_getHumi();
 
 #endif /* HTS221_H_ */

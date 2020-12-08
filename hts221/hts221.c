@@ -27,9 +27,10 @@ void hts221_readArray(uint8_t * data, uint8_t reg, uint8_t length)
 
 
 
-int16_t hts221_getTemp()
+float hts221_getTemp()
 {
-	int16_t T0_degC,T1_degC,MSB_T0,MSB_T1,T0_out,T1_out,vystupna,T_out;
+	int16_t T0_degC,T1_degC,MSB_T0,MSB_T1,T0_out,T1_out,T_out;
+	float vystupna;
 
 uint8_t data[2],data_single,pom;	//temp premenne na citanie registrov
 
@@ -54,9 +55,9 @@ T_out = (int16_t) ((int16_t)data[1] << 8 |	(int16_t)data[0]);	//tiez
 
 //https://www.johndcook.com/interpolatorhelp.html
 //y1 = T0_degC,y2 = T1_degC;x1 = T0Out, x2 = T1_Out, x3 = T_out
-vystupna = ((T1_out - T_out)*T0_degC + (T_out - T0_out)*T1_degC) / (T1_out -T0_out);
+vystupna = 10*(((T1_out - T_out)*T0_degC + (T_out - T0_out)*T1_degC) / (T1_out -T0_out));
 
-return vystupna;
+return vystupna/10.0f;
 }
 
 
