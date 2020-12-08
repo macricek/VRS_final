@@ -28,6 +28,7 @@
 
 uint8_t temp = 0;
 float mag[3], acc[3];
+int16_t teplota=0;
 
 void SystemClock_Config(void);
 
@@ -49,7 +50,8 @@ int main(void)
 
   while (1)
   {
-	  hts221_getTemp();
+	  teplota = hts221_getTemp();
+
 	  LL_mDelay(50);
   }
 }

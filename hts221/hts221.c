@@ -27,30 +27,30 @@ void hts221_readArray(uint8_t * data, uint8_t reg, uint8_t length)
 
 
 
-uint16_t hts221_getTemp()
+int16_t hts221_getTemp()
 {
-uint16_t T0_degC,T1_degC,MSB_T0,MSB_T1,T0_out,T1_out,vystupna,T_out;
+	int16_t T0_degC,T1_degC,MSB_T0,MSB_T1,T0_out,T1_out,vystupna,T_out;
 
 uint8_t data[2],data_single,pom;	//temp premenne na citanie registrov
 
 //	tvar cisla :  MSB MSB degC(8)
 pom=hts221_read_byte(T1_T0_MSB);
-MSB_T0=(uint16_t) (pom & 0x3)<<8;	//porovnanie s poslednymi dvoma bitmi a posun o 8
-MSB_T1=(uint16_t) (pom & 0xC)<<6;	//porovnanie s 3tim a 4tym od konca a posun   o 6
+MSB_T0=(int16_t)(pom & 0x3)<<8;	//porovnanie s poslednymi dvoma bitmi a posun o 8
+MSB_T1=(int16_t) (pom & 0xC)<<6;	//porovnanie s 3tim a 4tym od konca a posun   o 6
 
 hts221_readArray(&data_single, T0_degC_x8, 1);
-T0_degC = (uint16_t) ((data_single | MSB_T0) 	/	8);
+T0_degC = (int16_t) ((data_single | MSB_T0) 	/	8);
 
 hts221_readArray(&data_single, T1_degC_x8, 1);
-T1_degC = (uint16_t) ((data_single| MSB_T1)	/	8);
+T1_degC = (int16_t) ((data_single| MSB_T1)	/	8);
 
 hts221_readArray(data, T0_OUT, 2);
-T0_out = (uint16_t) (data[1] << 8 |	data[0]);	//spojene do velkej
+T0_out = (int16_t) ((int16_t)data[1] << 8 |	(int16_t)data[0]);	//spojene do velkej
 hts221_readArray(data, T1_OUT, 2);
-T1_out = (uint16_t) (data[1] << 8 |	data[0]);	//tiez
+T1_out = (int16_t) ((int16_t)data[1] << 8 |	(int16_t)data[0]);	//tiez
 
 hts221_readArray(data, T_OUT, 2);
-T_out = (uint16_t) (data[1] << 8 |	data[0]);	//tiez
+T_out = (int16_t) ((int16_t)data[1] << 8 |	(int16_t)data[0]);	//tiez
 
 //https://www.johndcook.com/interpolatorhelp.html
 //y1 = T0_degC,y2 = T1_degC;x1 = T0Out, x2 = T1_Out, x3 = T_out
@@ -89,8 +89,12 @@ uint8_t hts221_init(void)
 
 	//temp device init
 
-	lsm6ds0_write_byte(CTRL_REG1, CTRL_REG1_VAL);	//zapne senzor a da refresh rate 1Hz
+	hts221_write_byte(CTRL_REG1, CTRL_REG1_VAL);	//zapne senzor a da refresh rate 1Hz
+
+	uint8_t nastavenie=hts221_read_byte(CTRL_REG1);
 
 
 	return status;
 }
+
+

@@ -49,8 +49,8 @@ i2c_comm.bin \
 all: i2c_comm.elf secondary-outputs
 
 # Tool invocations
-i2c_comm.elf: $(OBJS) $(USER_OBJS) D:\i2c_comm\STM32F303K8TX_FLASH.ld
-	arm-none-eabi-gcc -o "i2c_comm.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\i2c_comm\STM32F303K8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="i2c_comm.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+i2c_comm.elf: $(OBJS) $(USER_OBJS) C:\VRS10\VRS_final\STM32F303K8TX_FLASH.ld
+	arm-none-eabi-gcc -o "i2c_comm.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\VRS10\VRS_final\STM32F303K8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="i2c_comm.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
