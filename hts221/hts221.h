@@ -21,6 +21,9 @@
 #define		T1_degC_x8						0x33
 
 #define		T1_T0_MSB						0x35
+#define		T0_OUT							0x3C
+#define		T1_OUT							0x3E
+#define		T_OUT							0x2A
 
 uint8_t hts221_read_byte(uint8_t reg_addr);
 void hts221_write_byte(uint8_t reg_addr, uint8_t value);
