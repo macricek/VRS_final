@@ -30,7 +30,7 @@
 
 uint8_t temp = 0;
 float mag[3], acc[3], tlak=0;
-float azi,r;
+float azi,r,nadmorska;
 
 float teplota = 0;
 uint8_t vlhkost = 0;
@@ -65,11 +65,22 @@ int main(void)
 	 // void lis3mdl_get_mag(float* x, float* y, float* z)
 	  lis3mdl_get_mag(&mag[0],&mag[1],&mag[2]);
 	  azi=lis3mdl_get_azimut(mag[0],mag[1]);
-
+	  nadmorska = nadmorska_vyska(tlak,teplota);
 	  LL_mDelay(50);
   }
 }
-
+float nadmorska_vyska(float tlak,float teplota)
+{
+	//z2 - z1 = R/g*T(K)*ln(p1/p2)
+	float z2;
+	const float R = 8.314472;
+	const float g = 9.81;
+	const float TK = 273.15;
+	const float p1 = 101325 / 1000.0f;
+	float akt_t = teplota + TK;
+	z2 = (R/g)*akt_t*log(p1/tlak);
+	return z2;
+}
 /**
   * @brief System Clock Configuration
   * @retval None

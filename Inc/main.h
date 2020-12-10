@@ -46,7 +46,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+float nadmorska_vyska(float tlak,float teplota);
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
