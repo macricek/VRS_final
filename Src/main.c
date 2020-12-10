@@ -71,16 +71,15 @@ int main(void)
 }
 float nadmorska_vyska(float tlak,float teplota)
 {
-	//z2 - z1 = R/g*T(K)*ln(p1/p2)
+	//https://keisan.casio.com/exec/system/1224585971
 	float z2;
-	const float R = 8.314472;
-	const float g = 9.81;
+	const float pom = 1/5.257;
 	const float TK = 273.15;
-	const float p1 = 101325 / 100.0f;
+	const float p0 = 101325 / 100.0f;
 	float akt_t = teplota + TK;
-	z2 = (R/g)*log(p1/tlak)*15+273.15;
+	float mocnina = pow(p0/tlak,pom);
 
-
+	z2 = ((mocnina-1)*(TK + 15)) / 0.0065;
 
 	return z2;
 }
