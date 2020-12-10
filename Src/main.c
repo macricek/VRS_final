@@ -76,9 +76,12 @@ float nadmorska_vyska(float tlak,float teplota)
 	const float R = 8.314472;
 	const float g = 9.81;
 	const float TK = 273.15;
-	const float p1 = 101325 / 1000.0f;
+	const float p1 = 101325 / 100.0f;
 	float akt_t = teplota + TK;
-	z2 = (R/g)*akt_t*log(p1/tlak);
+	z2 = (R/g)*log(p1/tlak)*15+273.15;
+
+
+
 	return z2;
 }
 /**
