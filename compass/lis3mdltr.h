@@ -238,3 +238,4 @@ uint8_t lis3mdl_read_byte(uint8_t reg_addr);
 void lis3mdl_set_meas_freq(uint8_t meas_frequency);
 int8_t lis3mdl_get_temp();
 void lis3mdl_write_byte(uint8_t reg_addr, uint8_t value);
+float lis3mdl_get_azimut(float x, float y);

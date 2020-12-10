@@ -65,6 +65,15 @@ void lis3mdl_get_mag(float* x, float* y, float* z)
 	*z = (float)(zz/range_scale);
 }
 
+float lis3mdl_get_azimut(float x, float y){
+	float r,azi;
+	r=180/3.14;
+	azi = r*atan2(y,x); // azimuth - measured from x axis
+	if (azi < 0){
+		azi+=360;
+	}
+	return azi;
+}
 
 uint8_t lis3mdl_init(void)
 {
@@ -109,6 +118,12 @@ uint8_t lis3mdl_init(void)
 
 	uint8_t ctrl4 = LIS3MDL_CTRL4_OMZ_UHP;
 	lis3mdl_write_byte(LIS3MDL_ADDRESS_CTRL4, ctrl4);
+
+	//lis3mdl_write_byte(LIS3MDL_ADDRESS_CTRL2, 0x40);
+	//lis3mdl_write_byte(LIS3MDL_ADDRESS_CTRL1, 0xFC);
+	//lis3mdl_write_byte(LIS3MDL_ADDRESS_CTRL4, 0x0C);
+	//lis3mdl_write_byte(LIS3MDL_ADDRESS_CTRL3, 0x00);
+	uint8_t hovno = lis3mdl_read_byte(LIS3MDL_ADDRESS_CTRL2); 	//12 gauss
 
 	return status;
 }

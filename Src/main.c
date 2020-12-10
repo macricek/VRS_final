@@ -26,13 +26,18 @@
 #include "lsm6ds0.h"
 #include <hts221.h>
 #include <lps25hb.h>
+#include <math.h>
 
 uint8_t temp = 0;
 float mag[3], acc[3], tlak=0;
+float azi,r;
+
 float teplota = 0;
 uint8_t vlhkost = 0;
 
 void SystemClock_Config(void);
+
+
 
 
 int main(void)
@@ -50,15 +55,16 @@ int main(void)
   lsm6ds0_init();
   hts221_init();
   lps25hb_init();
+  lis3mdl_init();
 
   while (1)
   {
 	  teplota = hts221_getTemp();
 	  vlhkost = hts221_getHumi();
-
 	  tlak = lps25hb_getPressure();
-
-
+	 // void lis3mdl_get_mag(float* x, float* y, float* z)
+	  lis3mdl_get_mag(&mag[0],&mag[1],&mag[2]);
+	  azi=lis3mdl_get_azimut(mag[0],mag[1]);
 
 	  LL_mDelay(50);
   }
