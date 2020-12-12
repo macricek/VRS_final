@@ -85,6 +85,11 @@ void MX_GPIO_Init(void)
    NVIC_SetPriority(EXTI3_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
    NVIC_EnableIRQ(EXTI3_IRQn);
 
+   RCC->AHBENR |= RCC_AHBENR_GPIOAEN;		//enabled clock
+   GPIOB->MODER &= ~(GPIO_MODER_MODER3);		//moder reset -> INPUT
+   GPIOB->PUPDR &= ~(GPIO_PUPDR_PUPDR3);		//transistors
+   GPIOB->PUPDR |= GPIO_PUPDR_PUPDR3_0;
+
 }
 
 /* USER CODE BEGIN 2 */
