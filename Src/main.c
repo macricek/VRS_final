@@ -27,6 +27,9 @@
 #include <hts221.h>
 #include <lps25hb.h>
 #include <math.h>
+#include "tim.h"
+#include "display.h"
+
 
 uint8_t temp = 0;
 float mag[3], acc[3], tlak=0;
@@ -34,6 +37,8 @@ float azi,r,nadmorska;
 
 float teplota = 0;
 uint8_t vlhkost = 0;
+
+
 
 void SystemClock_Config(void);
 
@@ -52,6 +57,16 @@ int main(void)
   MX_GPIO_Init();
   MX_I2C1_Init();
 
+  setSegments();
+  setDigits();
+
+  LL_mDelay(2000);
+
+  resetDigits();
+  resetSegments();
+
+  MX_TIM3_Init();
+
   lsm6ds0_init();
   hts221_init();
   lps25hb_init();
@@ -62,7 +77,7 @@ int main(void)
 	  teplota = hts221_getTemp();
 	  vlhkost = hts221_getHumi();
 	  tlak = lps25hb_getPressure();
-	 // void lis3mdl_get_mag(float* x, float* y, float* z)
+	  // void lis3mdl_get_mag(float* x, float* y, float* z)
 	  lis3mdl_get_mag(&mag[0],&mag[1],&mag[2]);
 	  azi=lis3mdl_get_azimut(mag[0],mag[1]);
 	  nadmorska = nadmorska_vyska(tlak,teplota);
