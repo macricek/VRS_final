@@ -29,18 +29,46 @@
 #include <math.h>
 #include "tim.h"
 #include "display.h"
-
+#include <string.h>
 
 uint8_t temp = 0;
 float mag[3], acc[3], tlak=0;
 float azi,r,nadmorska;
-int switch_state = 0;
+int state = 1;
 float teplota = 0;
 uint8_t vlhkost = 0;
 
-
+int akt=0;
+int smer=1;
+char c2[15];
+char pom[4];
 
 void SystemClock_Config(void);
+void vypisAzimuth();
+void vypisTeplotu();
+void vypisVlhkost();
+void vypisTlak();
+void vypisNadmorskuVysku();
+void vyberAktualnyVypis()
+{
+	memset(c2,0,15);
+	switch (state)
+	{
+		case 1: vypisAzimuth(); break;
+		case 2: vypisTeplotu();	break;
+		case 3: vypisVlhkost(); break;
+		case 4: vypisTlak(); 	break;
+		case 5: vypisNadmorskuVysku();	break;
+	}
+}
+void posuvanie(){
+
+	for (int j=0;j<4;j++){
+
+		pom[j]=c2[j+akt];
+
+	}
+}
 
 int main(void)
 {
@@ -78,7 +106,26 @@ int main(void)
 	  lis3mdl_get_mag(&mag[0],&mag[1],&mag[2]);
 	  azi=lis3mdl_get_azimut(mag[0],mag[1]);
 	  nadmorska = nadmorska_vyska(tlak,teplota);
-	  LL_mDelay(50);
+	  vyberAktualnyVypis();	// vyberie do c2 to co ma byt vypisane
+
+	  posuvanie();			//posun do strany
+	  displayNumber(pom);	//ukaz na displeji
+	  LL_mDelay(500);
+
+	  if(akt==strlen(c2)-3) //dosli sme na koniec, otoc smer
+	  {
+	   smer=0;
+	  }
+	  else if(akt==0)		//zaciatok, otoc smer
+	  {
+	  	 smer=1;
+	  }
+
+	  if(smer==1){
+		  akt++;
+	  }else{
+		  akt--;
+	  }
   }
 }
 float nadmorska_vyska(float tlak,float teplota)
@@ -92,8 +139,35 @@ float nadmorska_vyska(float tlak,float teplota)
 	float mocnina = pow(p0/tlak,pom);
 
 	z2 = ((mocnina-1)*(TK + 15)) / 0.0065;
-
+	if (z2 >= 10000)
+		z2 = 9999.99;
 	return z2;
+}
+
+
+void vypisAzimuth()
+{
+char zaciatok[] = "MAG_";
+char azimuth[5];
+gcvt(azi,5,azimuth);
+strcat(c2,zaciatok);
+strcat(c2,azimuth);
+}
+void vypisTeplotu()
+{
+
+}
+void vypisVlhkost()
+{
+
+}
+void vypisTlak()
+{
+
+}
+void vypisNadmorskuVysku()
+{
+
 }
 /**
   * @brief System Clock Configuration

@@ -55,9 +55,12 @@ T_out = (int16_t) ((int16_t)data[1] << 8 |	(int16_t)data[0]);	//tiez
 
 //https://www.johndcook.com/interpolatorhelp.html
 //y1 = T0_degC,y2 = T1_degC;x1 = T0Out, x2 = T1_Out, x3 = T_out
-vystupna = 10*(((T1_out - T_out)*T0_degC + (T_out - T0_out)*T1_degC) / (T1_out -T0_out));
-
-return vystupna/10.0f;
+vystupna = ((T1_out - T_out)*T0_degC + (T_out - T0_out)*T1_degC) / (T1_out -T0_out);
+if (vystupna >= 100)
+	vystupna = 99.9;
+else if (vystupna <= -100)
+	vystupna = -99.9;
+return vystupna;
 }
 
 

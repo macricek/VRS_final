@@ -587,6 +587,10 @@ void updateDisplay(void)
 							podjebnik();
 							break;
 
+			case '.':
+							setDigit(i);
+							setDecimalPoint();
+							break;
 		}
 
 

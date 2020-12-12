@@ -33,7 +33,7 @@ pressL = lps25hb_read_byte(PRESS_OUT_L);
 pressXL = lps25hb_read_byte(PRESS_OUT_XL);
 
 int complement = (pressH<<16) | (pressL<<8) | pressXL;
-return complement / 4096.1f;
+return complement / 4096.0f;
 }
 
 
