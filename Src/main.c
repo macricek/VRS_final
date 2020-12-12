@@ -34,16 +34,13 @@
 uint8_t temp = 0;
 float mag[3], acc[3], tlak=0;
 float azi,r,nadmorska;
-
+int switch_state = 0;
 float teplota = 0;
 uint8_t vlhkost = 0;
 
 
 
 void SystemClock_Config(void);
-
-
-
 
 int main(void)
 {

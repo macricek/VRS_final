@@ -39,18 +39,25 @@ extern "C" {
 #include "stm32f3xx_ll_pwr.h"
 #include "stm32f3xx_ll_dma.h"
 #include "stm32f3xx_ll_gpio.h"
-
-#include "stm32f3xx_ll_rcc.h"
-#include "stm32f3xx_ll_bus.h"
-#include "stm32f3xx_ll_system.h"
-#include "stm32f3xx_ll_exti.h"
-#include "stm32f3xx_ll_cortex.h"
-#include "stm32f3xx_ll_utils.h"
-#include "stm32f3xx_ll_pwr.h"
-#include "stm32f3xx_ll_dma.h"
 #include "stm32f3xx_ll_tim.h"
 #include "stm32f3xx.h"
-#include "stm32f3xx_ll_gpio.h"
+
+#define BUTTON_Pin 							LL_GPIO_PIN_3
+#define BUTTON_GPIO_Port 					GPIOB
+#define BUTTON_EXTI_IRQn 					EXTI3_IRQn
+
+#define		GPIO_PORT_BUTTON				GPIOB
+#define		GPIO_PIN_BUTTON					3
+
+// defines for "checkButtonState"
+#define		TRIGGER_RISE					0
+#define		TRIGGER_FALL					1
+
+#define		BUTTON_EXTI_TRIGGER				TRIGGER_RISE
+#define		BUTTON_EXTI_SAMPLES_WINDOW		20
+#define		BUTTON_EXTI_SAMPLES_REQUIRED	10
+
+#define BUTTON_GET_STATE		LL_GPIO_IsInputPinSet(BUTTON_GPIO_Port,BUTTON_Pin)
 
 #if defined(USE_FULL_ASSERT)
 #include "stm32_assert.h"
