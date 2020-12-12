@@ -32,16 +32,16 @@
 #include <string.h>
 
 uint8_t temp = 0;
-float mag[3], acc[3], tlak=0;
-float azi,r,nadmorska;
+float mag[3],nadmorska=0, tlak=0;
+float azi=0;
 int state = 1;
 float teplota = 0;
 uint8_t vlhkost = 0;
-
 int akt=0;
 int smer=1;
-char c2[15];
 char pom[4];
+int dlzka=0;
+char c2[11];	//musi byt posledny zadefinovany prvok
 
 void SystemClock_Config(void);
 void vypisAzimuth();
@@ -51,7 +51,7 @@ void vypisTlak();
 void vypisNadmorskuVysku();
 void vyberAktualnyVypis()
 {
-	memset(c2,0,15);
+	memset(c2,0,strlen(c2));
 	switch (state)
 	{
 		case 1: vypisAzimuth(); break;
@@ -99,20 +99,21 @@ int main(void)
 
   while (1)
   {
+
 	  teplota = hts221_getTemp();
 	  vlhkost = hts221_getHumi();
 	  tlak = lps25hb_getPressure();
 	  // void lis3mdl_get_mag(float* x, float* y, float* z)
-	  lis3mdl_get_mag(&mag[0],&mag[1],&mag[2]);
+	 lis3mdl_get_mag(&mag[0],&mag[1],&mag[2]);
 	  azi=lis3mdl_get_azimut(mag[0],mag[1]);
 	  nadmorska = nadmorska_vyska(tlak,teplota);
 	  vyberAktualnyVypis();	// vyberie do c2 to co ma byt vypisane
-
-	  posuvanie();			//posun do strany
 	  displayNumber(pom);	//ukaz na displeji
-	  LL_mDelay(500);
+	  LL_mDelay(2000);
+	  posuvanie();			//posun do strany
 
-	  if(akt==strlen(c2)-3) //dosli sme na koniec, otoc smer
+
+	  if(akt==strlen(c2)-4) //dosli sme na koniec, otoc smer
 	  {
 	   smer=0;
 	  }
@@ -149,25 +150,87 @@ void vypisAzimuth()
 {
 char zaciatok[] = "MAG_";
 char azimuth[5];
+char final[5];
 gcvt(azi,5,azimuth);
+for (int i=0;i<5;i++)
+	{
+	final[i]=azimuth[i];
+	}
 strcat(c2,zaciatok);
-strcat(c2,azimuth);
+strcat(c2,final);
+
 }
 void vypisTeplotu()
 {
-
+	char zaciatok[] = "TEMP_";
+	char teplota_c[4];
+	char final[4];
+	gcvt(teplota,4,teplota_c);
+	for (int i=0;i<4;i++)
+		{
+		final[i]=teplota_c[i];
+		}
+	strcat(c2,zaciatok);
+	strcat(c2,final);
 }
 void vypisVlhkost()
 {
-
+	char zaciatok[] = "HUM_";
+		char vlhkost_c[2];
+		itoa(vlhkost,vlhkost_c,10);
+		strcat(c2,zaciatok);
+		strcat(c2,vlhkost_c);
 }
+
 void vypisTlak()
 {
+	  	char zaciatok[] = "BAR_";
+  		char tlak_c[6];
 
+  		char final[7];
+  		int i=0;
+  		gcvt(tlak,5,tlak_c);
+
+  		if(tlak < 1000){
+  				final[0]='0';
+  				for (i=1;i<7;i++)
+  						{
+  						final[i]=tlak_c[i-1];
+  						}
+  				final[i]='\0';
+  		}else{
+  				for (i=0;i<7;i++)
+  						{
+  						final[i]=tlak_c[i];
+  						}
+  		final[i]='\0';
+  		}
+
+  		strcat(c2,zaciatok);
+  		strcat(c2,final);
 }
+
 void vypisNadmorskuVysku()
 {
+	char zaciatok[] = "ALT_";
+		char nadmorska_c[6];
+		char final[6];
+		gcvt(nadmorska,5,nadmorska_c);
+		if(tlak < 1000){
+						final[0]='0';
 
+						for (int i=1;i<6;i++)
+								{
+								final[i]=nadmorska_c[i-1];
+								}
+				}else{
+						for (int i=0;i<6;i++)
+								{
+								final[i]=nadmorska_c[i];
+								}
+				}
+		strcat(c2,zaciatok);
+		strcat(c2,final);
 }
 /**
   * @brief System Clock Configuration

@@ -248,7 +248,7 @@ uint8_t checkButtonState(GPIO_TypeDef* PORT, uint8_t PIN, uint8_t edge, uint8_t 
 	return 0;
 }
 
-extern int state;
+extern int state,akt;
 
 void EXTI3_IRQHandler(void)
 {
@@ -270,7 +270,9 @@ void EXTI3_IRQHandler(void)
     							state++;
     							else
     							state = 1;
+    							akt=0;
     						}
+
     /* USER CODE BEGIN LL_EXTI_LINE_3 */
 
     /* USER CODE END LL_EXTI_LINE_3 */
