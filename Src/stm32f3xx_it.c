@@ -247,23 +247,27 @@ uint8_t checkButtonState(GPIO_TypeDef* PORT, uint8_t PIN, uint8_t edge, uint8_t 
 		}
 	return 0;
 }
+
 extern int switch_state;
 
 void EXTI3_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI3_IRQn 0 */
-	if(checkButtonState(					GPIO_PORT_BUTTON,
-											GPIO_PIN_BUTTON,
-											BUTTON_EXTI_TRIGGER,
-											BUTTON_EXTI_SAMPLES_WINDOW,
-											BUTTON_EXTI_SAMPLES_REQUIRED))
-						{
-							switch_state ^= 1;
-						}
+
   /* USER CODE END EXTI3_IRQn 0 */
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_3) != RESET)
   {
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
+
+
+    if(checkButtonState(					GPIO_PORT_BUTTON,
+    											GPIO_PIN_BUTTON,
+    											BUTTON_EXTI_TRIGGER,
+    											BUTTON_EXTI_SAMPLES_WINDOW,
+    											BUTTON_EXTI_SAMPLES_REQUIRED))
+    						{
+    							switch_state ^= 1;
+    						}
     /* USER CODE BEGIN LL_EXTI_LINE_3 */
 
     /* USER CODE END LL_EXTI_LINE_3 */

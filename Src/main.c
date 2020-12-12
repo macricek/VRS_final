@@ -57,7 +57,7 @@ int main(void)
   setSegments();
   setDigits();
 
-  LL_mDelay(2000);
+ // LL_mDelay(2000);
 
   resetDigits();
   resetSegments();
