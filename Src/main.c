@@ -191,12 +191,12 @@ void vypisVlhkost()
 void vypisTlak()
 {
 	  	char zaciatok[] = "BAR_";
+	  	strcat(c2,zaciatok);
   		char tlak_c[6];
 
   		char final[7];
   		int i=0;
   		gcvt(tlak,5,tlak_c);
-
   		if(tlak < 1000){
   				final[0]='0';
   				for (i=1;i<7;i++)
@@ -211,14 +211,13 @@ void vypisTlak()
   						}
   		final[i]='\0';
   		}
-
-  		strcat(c2,zaciatok);
   		strcat(c2,final);
 }
 
 void vypisNadmorskuVysku()
 {
 	char zaciatok[] = "ALT_";
+	strcat(c2,zaciatok);
 		char nadmorska_c[6];
 		char final[6];
 		gcvt(nadmorska,5,nadmorska_c);
@@ -235,7 +234,6 @@ void vypisNadmorskuVysku()
 								final[i]=nadmorska_c[i];
 								}
 				}
-		strcat(c2,zaciatok);
 		strcat(c2,final);
 }
 /**
