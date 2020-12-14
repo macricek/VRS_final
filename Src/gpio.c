@@ -82,7 +82,7 @@ void MX_GPIO_Init(void)
    LL_EXTI_Init(&EXTI_InitStruct);
 
    /* EXTI interrupt init*/
-   NVIC_SetPriority(EXTI3_IRQn,NVIC_PRIORITYGROUP_0);
+   NVIC_SetPriority(EXTI3_IRQn,NVIC_PRIORITYGROUP_2);
    NVIC_EnableIRQ(EXTI3_IRQn);
 
    RCC->AHBENR |= RCC_AHBENR_GPIOAEN;		//enabled clock

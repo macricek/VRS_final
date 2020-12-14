@@ -260,7 +260,7 @@ void EXTI3_IRQHandler(void)
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
 
 
-    if(checkButtonState(					GPIO_PORT_BUTTON,
+    if(checkButtonState(						GPIO_PORT_BUTTON,
     											GPIO_PIN_BUTTON,
     											BUTTON_EXTI_TRIGGER,
     											BUTTON_EXTI_SAMPLES_WINDOW,

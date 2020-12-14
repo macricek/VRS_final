@@ -34,7 +34,7 @@
 uint8_t temp = 0;
 float mag[3],nadmorska=0, tlak=0;
 float azi=0;
-int state = 1;
+int state = 0;
 float teplota = 0;
 uint8_t vlhkost = 0;
 int akt=0;
