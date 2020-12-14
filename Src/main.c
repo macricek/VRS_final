@@ -149,14 +149,17 @@ float nadmorska_vyska(float tlak,float teplota)
 void vypisAzimuth()
 {
 char zaciatok[] = "MAG_";
+int i=0;
+strcat(c2,zaciatok);
 char azimuth[5];
+
 char final[5];
 gcvt(azi,5,azimuth);
-for (int i=0;i<5;i++)
+for (i=0;i<5;i++)
 	{
 	final[i]=azimuth[i];
 	}
-strcat(c2,zaciatok);
+final[i]='\0';
 strcat(c2,final);
 
 }
