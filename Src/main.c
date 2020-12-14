@@ -163,6 +163,7 @@ strcat(c2,final);
 void vypisTeplotu()
 {
 	char zaciatok[] = "TEMP_";
+	char end[]= ".0";
 	char teplota_c[4];
 	char final[4];
 	gcvt(teplota,4,teplota_c);
@@ -172,6 +173,7 @@ void vypisTeplotu()
 		}
 	strcat(c2,zaciatok);
 	strcat(c2,final);
+	strcat(c2,end);
 }
 void vypisVlhkost()
 {
